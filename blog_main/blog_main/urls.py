@@ -15,13 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home,name='home')
+    path('',views.home,name='home'),
+    path('category/', include('blogs.urls'))
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 #We concatenate static() to urlpatterns so Django can serve uploaded media files (images, videos, PDFs, etc.) during development.
 #Without this, your uploaded files won’t show up in the browser, even if they exist on disk.
