@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+#Category Model
 class Category(models.Model):
     category_name=models.CharField(max_length=50,unique=True)
     created_at=models.DateTimeField(auto_now_add=True)
@@ -17,6 +19,7 @@ STATUS_CHOICES=(
     ("Published","Published")
 )
 
+#Blog Model
 class Blog(models.Model):
     title=models.CharField(max_length=100)
     slug=models.SlugField(max_length=150,unique=True)
@@ -32,3 +35,28 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+# About us model
+class About(models.Model):
+    about_heading=models.CharField(max_length=25)
+    about_description=models.TextField(max_length=255)
+    
+    class Meta:
+        verbose_name_plural='about'
+
+    def __str__(self):
+        return self.about_heading
+    
+
+#follow us model
+class SocialLink(models.Model):
+    platform=models.CharField(max_length=25)   
+    link=models.URLField(max_length=100)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.platform
+    
+    

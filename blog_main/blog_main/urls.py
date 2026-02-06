@@ -20,10 +20,13 @@ from django.urls import path, include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from blogs import views as BlogsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
-    path('category/', include('blogs.urls'))
+    path('category/', include('blogs.urls')),
+    path('<slug:slug>',BlogsView.blogs,name='blogs'),
+    path('blogs/search/',BlogsView.search,name='search')
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 #We concatenate static() to urlpatterns so Django can serve uploaded media files (images, videos, PDFs, etc.) during development.
 #Without this, your uploaded files won’t show up in the browser, even if they exist on disk.
