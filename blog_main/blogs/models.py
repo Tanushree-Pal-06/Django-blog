@@ -26,7 +26,7 @@ class Blog(models.Model):
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
     featured_image=models.ImageField(upload_to='uploads/%Y/%m/%d')
-    description=models.TextField(max_length=500)
+    short_description=models.TextField(max_length=500)
     blog_body=models.TextField(max_length=2000)
     status=models.CharField(max_length=20,choices=STATUS_CHOICES,default="Draft")
     is_featured=models.BooleanField(default=0)
@@ -60,3 +60,12 @@ class SocialLink(models.Model):
         return self.platform
     
     
+class Comment(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE) # if user gets deleted the comment should also get deleted
+    blog=models.ForeignKey(Blog,on_delete=models.CASCADE)# if blog deletes, comment also gets deleted
+    comment=models.TextField(max_length=250)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.comment
